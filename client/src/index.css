@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap");
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --border: #1a1a1a;
+  --ring: #3b82f6;
+  --primary: #3b82f6;
+  --secondary: #1a1a1a;
+  --accent: #1a1a1a;
+  --muted: #1a1a1a;
+  --radius: 0.625rem;
+  --card: #0f0f0f;
+  --card-foreground: #ffffff;
+  --popover: #0f0f0f;
+  --popover-foreground: #ffffff;
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #ffffff;
+  --muted-foreground: #a1a1aa;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --input: #1a1a1a;
+  --widget-primary: hsl(4 86% 66%);
+  --widget-secondary: hsl(43 94% 72%);
+  --widget-accent: hsl(202 89% 24%);
+  --widget-muted: hsl(217 60% 11%);
+}
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --border: #1a1a1a;
+  --ring: #3b82f6;
+  --primary: #3b82f6;
+  --secondary: #1a1a1a;
+  --accent: #1a1a1a;
+  --muted: #1a1a1a;
+  --card: #0f0f0f;
+  --card-foreground: #ffffff;
+  --popover: #0f0f0f;
+  --popover-foreground: #ffffff;
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #ffffff;
+  --muted-foreground: #a1a1aa;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --input: #1a1a1a;
+  --widget-primary: hsl(4 86% 66%);
+  --widget-secondary: hsl(43 94% 72%);
+  --widget-accent: hsl(202 89% 24%);
+  --widget-muted: hsl(217 60% 11%);
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-widget-primary: hsl(4 86% 66%);
+  --color-widget-secondary: hsl(43 94% 72%);
+  --color-widget-accent: hsl(202 89% 24%);
+  --color-widget-muted: hsl(217 60% 11%);
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-color: transparent;
+    color: transparent;
+  }
+  .font-oswald {
+    font-family: "Oswald", sans-serif;
+  }
+  .font-inter {
+    font-family: "Inter", sans-serif;
+  }
+}
