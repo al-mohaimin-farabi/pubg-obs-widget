@@ -1,4 +1,4 @@
-// import Heading from "../components/Heading";
+import Heading from "../components/Heading";
 import LeaderBoardTable from "../components/LeaderboardTable";
 import { useSocket } from "../hooks/useSocket";
 import { useAppDispatch } from "../hooks/redux";
@@ -24,9 +24,13 @@ const LeaderBoard = () => {
   }, [data, dispatch]);
 
   return (
-    <div className="font-oswald w-full h-100 overflow-hidden space-y-4">
-      {/* <Heading /> */}
-      <LeaderBoardTable />
+    <div className="font-oswald h-svh w-full space-y-4 overflow-hidden">
+      <div className="flex h-full items-end justify-items-end gap-6 p-4 pl-16">
+        <LeaderBoardTable className="" />
+        <div className="flex h-full w-full items-end justify-end">
+          <Heading />
+        </div>
+      </div>
     </div>
   );
 };
