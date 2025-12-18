@@ -5,44 +5,21 @@ import { Separator } from "./ui/separator";
 const LeaderBoardTable = () => {
   const leaderboard = useAppSelector((state) => state.leaderboard.teams);
 
-  const getRankRowColor = (position: number) => {
-    switch (position) {
-      case 1:
-        return "text-black bg-[linear-gradient(90deg,theme(colors.widget-secondary)_0%,rgba(255,235,184,1)_50%,theme(colors.widget-secondary)_100%)]";
-      case 2:
-        return "text-black bg-[linear-gradient(90deg,theme(colors.gray.200)_0%,theme(colors.slate.50)_50%,theme(colors.gray.200)_100%)]";
-      case 3:
-        return "text-black bg-[linear-gradient(90deg,theme(colors.widget-primary)_0%,rgba(252,221,207,1)_50%,theme(colors.widget-primary)_100%)]";
-      default:
-        return "text-white bg-linear-to-tr from-widget-accent to-widget-muted/20";
-    }
-  };
-
-  // const getRankIndicator = (position: number) => {
-  //   if (position === 1) return "▲";
-  //   if (position === 2) return "▲";
-  //   if (position === 3) return "▼";
-  //   return "▼";
-  // };
-
   return (
-    <div className="font-oswald w-full overflow-x-auto">
-      <table className="relative table-auto border-separate border-spacing-y-1">
-        <thead>
-          <tr className="text-nowrap text-white">
-            <th className="px-1 py-1 text-left text-sm">RANK</th>
-            {/* flag */}
+    <div className="font-oswald fixed bottom-4 left-16 w-196.25 overflow-hidden">
+      <table className="leaderboard-table relative w-full border-separate border-spacing-0">
+        <thead className="bg-linear-to-r from-widget-muted from-30% to-widget-accent">
+          <tr className="text-nowrap text-widget-secondary">
+            <th className="px-2 py-1 text-center text-sm">RANK</th>
             <th className="px-2 py-1 text-left text-sm"></th>
-            <th className="px-2 py-1 text-left text-sm">TEAM</th>
+            <th className="py-1 pr-2 pl-4 text-left text-sm">TEAM</th>
             <th className="px-2 py-1 text-center text-sm">PLACE PTS</th>
             <th className="px-2 py-1 text-center text-sm">ELIMS</th>
-            <th className="px-2 py-1 text-center text-sm text-widget-primary">
-              TOTAL PTS
-            </th>
+            <th className="px-2 py-1 text-center text-sm">TOTAL PTS</th>
             <th className="px-2 py-1 text-center text-sm">
               <img
                 src="/chicken.png"
-                className="max-h-16 w-full max-w-16 overflow-hidden"
+                className="mx-auto max-h-16 w-full max-w-16 overflow-hidden"
                 alt=""
               />
             </th>
@@ -52,26 +29,24 @@ const LeaderBoardTable = () => {
           {leaderboard.map((team) => (
             <tr
               key={team.team_id}
-              className={cn("", getRankRowColor(team.position))}
+              className={cn(
+                "bg-linear-to-r from-widget-accent from-60% to-widget-muted/80 text-white"
+              )}
             >
-              <td className="py-3 text-center text-nowrap">
-                <span className="text-lg font-bold"> #{team.position}</span>
-
-                {/* {getRankIndicator(team.position)}  */}
+              <td className="max-h-11.5 overflow-hidden bg-widget-muted py-3 text-center text-nowrap">
+                <span className="text-lg font-bold">#{team.position}</span>
               </td>
-              <td className="relative px-2 py-3">
-                <div className="relative flex items-center">
-                  <img src="/bd-flag.webp" className="w-14" alt="" />
-                </div>
+              <td className="relative max-h-11.5 overflow-hidden py-3 pl-4">
+                <img src="/bd-flag.webp" className="w-14" alt="" />
+
                 <Separator
                   className={cn(
-                    "absolute top-1/2 right-0 bottom-0 w-2 -translate-y-1/2 rounded data-[orientation=vertical]:h-[70%] data-[orientation=vertical]:w-0.5",
-                    team?.position > 3 ? "bg-white" : "bg-widget-accent"
+                    "absolute top-1/2 right-0 bottom-0 w-2 -translate-y-1/2 rounded bg-white data-[orientation=vertical]:h-[70%] data-[orientation=vertical]:w-0.5"
                   )}
                   orientation="vertical"
                 />
               </td>
-              <td className="px-2 py-3 text-sm">
+              <td className="max-h-11.5 overflow-hidden py-3 pr-2 pl-4 text-sm">
                 <div className="flex items-center gap-2">
                   <img
                     className="h-12 w-12 object-cover"
@@ -82,16 +57,16 @@ const LeaderBoardTable = () => {
                   </span>
                 </div>
               </td>
-              <td className="px-2 py-3 text-center text-base">
+              <td className="max-h-11.5 overflow-hidden px-2 py-3 text-center text-base">
                 {team.placement_point || 0}
               </td>
-              <td className="px-2 py-3 text-center text-base">
+              <td className="max-h-11.5 overflow-hidden px-2 py-3 text-center text-base">
                 {team.kills || 0}
               </td>
-              <td className="px-2 py-3 text-center text-base">
+              <td className="max-h-11.5 overflow-hidden px-2 py-3 text-center text-base">
                 {team.total_points || 0}
               </td>
-              <td className="px-2 py-3 text-center text-base">
+              <td className="max-h-11.5 overflow-hidden px-2 py-3 text-center text-base">
                 {team.games_won || 0}
               </td>
             </tr>

@@ -25,9 +25,9 @@
   --destructive: #dc2626;
   --input: #1a1a1a;
   --widget-primary: hsl(4 86% 66%);
-  --widget-secondary: hsl(43 94% 72%);
-  --widget-accent: hsl(202 89% 24%);
-  --widget-muted: hsl(217 60% 11%);
+  --widget-secondary: hsl(42, 85%, 76%);
+  --widget-accent: hsl(240, 49%, 51%);
+  --widget-muted: hsl(231, 59%, 56%);
 }
 .dark {
   --background: #0a0a0a;
@@ -49,9 +49,9 @@
   --destructive: #dc2626;
   --input: #1a1a1a;
   --widget-primary: hsl(4 86% 66%);
-  --widget-secondary: hsl(43 94% 72%);
-  --widget-accent: hsl(202 89% 24%);
-  --widget-muted: hsl(217 60% 11%);
+  --widget-secondary: hsl(42, 85%, 76%);
+  --widget-accent: hsl(240, 49%, 51%);
+  --widget-muted: hsl(231, 59%, 56%);
 }
 
 @theme {
@@ -74,14 +74,15 @@
   --color-destructive: var(--destructive);
   --color-input: var(--input);
   --color-widget-primary: hsl(4 86% 66%);
-  --color-widget-secondary: hsl(43 94% 72%);
-  --color-widget-accent: hsl(202 89% 24%);
-  --color-widget-muted: hsl(217 60% 11%);
+  --color-widget-secondary: hsl(42, 85%, 76%);
+  --color-widget-accent: hsl(240, 49%, 51%);
+  --color-widget-muted: hsl(231, 59%, 56%);
 }
 
 @layer base {
   body {
-    background-color: var(--background);
+    /* @apply bg-transparent text-inter text-foreground; */
+    background-color: transparent;
     color: var(--foreground);
     font-family: "Inter", sans-serif;
   }
