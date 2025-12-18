@@ -54,7 +54,7 @@ const LeaderBoardTable = () => {
               key={team.team_id}
               className={cn("", getRankRowColor(team.position))}
             >
-              <td className=" py-3 text-center text-nowrap">
+              <td className="py-3 text-center text-nowrap">
                 <span className="text-lg font-bold"> #{team.position}</span>
 
                 {/* {getRankIndicator(team.position)}  */}
