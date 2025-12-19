@@ -5,25 +5,25 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --border: #1a1a1a;
+  --background: #ffffff;
+  --foreground: #000000;
+  --border: #e5e7eb;
   --ring: #6366f1;
   --primary: #6366f1;
-  --secondary: #1a1a1a;
-  --accent: #1a1a1a;
-  --muted: #1a1a1a;
+  --secondary: #f3f4f6;
+  --accent: #f3f4f6;
+  --muted: #f3f4f6;
   --radius: 0.625rem;
-  --card: #0f0f0f;
-  --card-foreground: #ffffff;
-  --popover: #0f0f0f;
-  --popover-foreground: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
   --primary-foreground: #ffffff;
-  --secondary-foreground: #ffffff;
-  --muted-foreground: #a1a1aa;
-  --accent-foreground: #ffffff;
+  --secondary-foreground: #000000;
+  --muted-foreground: #6b7280;
+  --accent-foreground: #000000;
   --destructive: #dc2626;
-  --input: #1a1a1a;
+  --input: #e5e7eb;
   --widget-primary: hsl(4 86% 66%);
   --widget-secondary: hsl(42, 85%, 76%);
   --widget-accent: hsl(240, 49%, 51%);
@@ -127,9 +127,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    
-      @apply box-border bg-transparent text-foreground;
-      font-family: "Inter", sans-serif;
-    }
-  
+    @apply box-border bg-transparent text-foreground;
+    font-family: "Inter", sans-serif;
+  }
 }
