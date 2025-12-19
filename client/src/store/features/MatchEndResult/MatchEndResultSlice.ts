@@ -43,7 +43,7 @@ const initialState: LeaderboardState = {
    Slice
 ======================= */
 
-const leaderboardSlice = createSlice({
+const MatchEndResultSlice = createSlice({
   name: "leaderboard",
   initialState,
   reducers: {
@@ -53,5 +53,5 @@ const leaderboardSlice = createSlice({
   },
 });
 
-export const { setTeams } = leaderboardSlice.actions;
-export default leaderboardSlice.reducer;
+export const { setTeams } = MatchEndResultSlice.actions;
+export default MatchEndResultSlice.reducer;

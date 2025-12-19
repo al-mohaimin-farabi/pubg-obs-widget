@@ -8,8 +8,8 @@
   --background: #0a0a0a;
   --foreground: #ffffff;
   --border: #1a1a1a;
-  --ring: #3b82f6;
-  --primary: #3b82f6;
+  --ring: #6366f1;
+  --primary: #6366f1;
   --secondary: #1a1a1a;
   --accent: #1a1a1a;
   --muted: #1a1a1a;
@@ -28,13 +28,21 @@
   --widget-secondary: hsl(42, 85%, 76%);
   --widget-accent: hsl(240, 49%, 51%);
   --widget-muted: hsl(231, 59%, 56%);
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 .dark {
   --background: #0a0a0a;
   --foreground: #ffffff;
   --border: #1a1a1a;
-  --ring: #3b82f6;
-  --primary: #3b82f6;
+  --ring: #6366f1;
+  --primary: #6366f1;
   --secondary: #1a1a1a;
   --accent: #1a1a1a;
   --muted: #1a1a1a;
@@ -52,6 +60,14 @@
   --widget-secondary: hsl(42, 85%, 76%);
   --widget-accent: hsl(240, 49%, 51%);
   --widget-muted: hsl(231, 59%, 56%);
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 @theme {
@@ -79,16 +95,6 @@
   --color-widget-muted: hsl(231, 59%, 56%);
 }
 
-@layer base {
-  body {
-    /* @apply bg-transparent text-inter text-foreground; */
-    background-color: transparent;
-    color: var(--foreground);
-    font-family: "Inter", sans-serif;
-    box-sizing: border-box;
-  }
-}
-
 @layer utilities {
   .gradient-text {
     background-clip: text;
@@ -103,4 +109,27 @@
   .font-inter {
     font-family: "Inter", sans-serif;
   }
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    
+      @apply box-border bg-transparent text-foreground;
+      font-family: "Inter", sans-serif;
+    }
+  
 }

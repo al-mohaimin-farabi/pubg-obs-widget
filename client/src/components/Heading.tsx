@@ -11,19 +11,23 @@ const Heading = () => {
     <div className="relative w-full uppercase">
       <div className="relative w-full">
         <div className="relative flex w-full justify-center">
-          {firstTeam?.players.map((p, i) => (
-            <img
-              key={p.id}
-              src={p.image}
-              alt={p.in_game_name}
-              className={`h-[calc(100vh-400px)] ${i !== 0 ? "-ml-52" : ""} relative`}
-              style={{
-                zIndex: 10 + i,
-              }}
-            />
-          ))}
-          <div className="absolute bottom-0 z-100">
-            <div className={cn("flex items-center")}>
+          {firstTeam?.players.map((p, i) => {
+            const isLast = i === 3;
+
+            return (
+              <img
+                key={p.id}
+                src={p.image}
+                alt={p.in_game_name}
+                className={`h-[calc(100vh-400px)] ${i !== 0 ? "-ml-52" : ""} relative`}
+                style={{
+                  zIndex: isLast ? 10 : 10 + i,
+                }}
+              />
+            );
+          })}
+          <div className="absolute bottom-0 z-100 w-full bg-linear-to-t from-white to-transparent">
+            <div className={cn("mx-auto flex w-max items-center")}>
               <p className="text-9xl font-extrabold">#{firstTeam?.position}</p>
 
               <img src="/bd-flag.webp" className="ml-6 w-26" alt="" />

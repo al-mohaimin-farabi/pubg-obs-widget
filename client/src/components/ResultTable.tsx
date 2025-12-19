@@ -2,7 +2,7 @@ import { useAppSelector } from "../hooks/redux";
 import { cn } from "../lib/utils";
 import { Separator } from "./ui/separator";
 
-const LeaderBoardTable = ({ className }: { className?: string }) => {
+const ResultTable = ({ className }: { className?: string }) => {
   const leaderboard = useAppSelector((state) => state.leaderboard.teams);
 
   return (
@@ -45,7 +45,8 @@ const LeaderBoardTable = ({ className }: { className?: string }) => {
             key={team.team_id}
             className={cn(
               "relative z-10 grid max-h-11.5 grid-cols-[60px_56px_20px_1fr_80px_60px_80px_60px] gap-1 text-white",
-              index < leaderboard.length - 1 ? "" : ""
+              index < leaderboard.length - 1 ? "" : "",
+              `bg-[${team.team_color || "#000000"}] bg-opacity-80`
             )}
           >
             <div className="flex h-11.5 max-h-11.5 items-center justify-center overflow-hidden">
@@ -63,7 +64,7 @@ const LeaderBoardTable = ({ className }: { className?: string }) => {
             <div className="flex h-11.5 max-h-11.5 items-center overflow-hidden px-2 text-center text-lg">
               <div className="flex items-center gap-2">
                 <img
-                  className="h-12 w-12 object-cover"
+                  className="h-10 w-10 object-cover"
                   src={`${team?.team_logo}`}
                 />
                 <span className="shrink-0 uppercase">{team.team_name}</span>
@@ -89,4 +90,4 @@ const LeaderBoardTable = ({ className }: { className?: string }) => {
   );
 };
 
-export default LeaderBoardTable;
+export default ResultTable;
