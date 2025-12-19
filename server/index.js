@@ -3,13 +3,50 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { handleLeaderboardConnection } = require("./namespaces/leaderboard");
-const { NAMESPACES } = require("./utils/constants");
+const { NAMESPACES, EVENTS } = require("./utils/constants");
+const { getConfig, updateConfig } = require("./services/configService");
 
 const app = express();
 const server = createServer(app);
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
+const cors = require("cors");
+
+app.use(cors());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+// Serve uploaded files statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Multer storage config
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, "uploads");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    // Keep original extension
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
+});
+
 const io = new Server(server, {
   cors: {
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: "*", // Allow all for simplicity locally
     methods: ["GET", "POST", "PUT", "PATCH"],
   },
 });
@@ -24,15 +61,50 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+app.post("/api/upload/skin", upload.single("skin"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+  // Return the URL to access the file
+  const fileUrl = `/uploads/${req.file.filename}`;
+  res.json({ url: fileUrl, filename: req.file.filename });
+});
+
+app.get("/api/skins", (req, res) => {
+  const uploadDir = path.join(__dirname, "uploads");
+  if (!fs.existsSync(uploadDir)) {
+    return res.json([]);
+  }
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) return res.status(500).send("Error reading skins");
+    const images = files.filter((file) => /\.(png|jpg|jpeg|webp)$/i.test(file));
+    // Add default skin
+    const result = [{ name: "Default", url: "/skin.png", value: "default" }];
+    images.forEach((file) => {
+      result.push({
+        name: file,
+        url: `/uploads/${file}`,
+        value: `/uploads/${file}`,
+      });
+    });
+    res.json(result);
+  });
+});
+
+app.get("/api/config", (req, res) => {
+  res.json(getConfig());
+});
+
+app.post("/api/config", (req, res) => {
+  const newConfig = updateConfig(req.body);
+  // Broadcast update to leaderboard namespace
+  io.of(NAMESPACES.LEADERBOARD).emit(EVENTS.CONFIG.UPDATE, newConfig);
+  res.json(newConfig);
+});
+
 // Set up namespaces
 const leaderboardNamespace = io.of(NAMESPACES.LEADERBOARD);
 leaderboardNamespace.on("connection", handleLeaderboardConnection);
-
-// // Legacy root namespace (for backward compatibility, can be removed later)
-// io.on("connection", (socket) => {
-//   console.log("Legacy connection to root namespace");
-//   handleLeaderboardConnection(socket);
-// });
 
 const PORT = process.env.PORT || 5000;
 if (!global.serverStarted) {

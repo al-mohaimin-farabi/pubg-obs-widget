@@ -5,6 +5,10 @@ const EVENTS = {
     REQUEST: "leaderboard:request",
     ERROR: "leaderboard:error",
   },
+  CONFIG: {
+    UPDATE: "config:update",
+    REQUEST: "config:request",
+  },
 };
 
 // Namespace constants

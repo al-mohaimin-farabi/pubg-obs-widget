@@ -5,6 +5,10 @@ export const EVENTS = {
     REQUEST: "leaderboard:request",
     ERROR: "leaderboard:error",
   },
+  CONFIG: {
+    UPDATE: "config:update",
+    REQUEST: "config:request",
+  },
 } as const;
 
 // Namespace constants

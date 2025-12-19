@@ -1,9 +1,40 @@
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks/redux";
 import { cn } from "../lib/utils";
 import { Separator } from "./ui/separator";
 
-const ResultTable = ({ className }: { className?: string }) => {
+const ResultTable = ({
+  className,
+  skin = "/skin.png",
+}: {
+  className?: string;
+  skin?: string;
+}) => {
   const leaderboard = useAppSelector((state) => state.leaderboard.teams);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    // Wait for data and skin
+    const imageUrls = leaderboard.map((team) => team.team_logo).filter(Boolean);
+    const staticImages = ["/chicken.png", "/bd-flag.webp", skin];
+    const allImages = [...imageUrls, ...staticImages];
+
+    const promises = allImages.map((src) => {
+      if (!src) return Promise.resolve();
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src as string;
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      setImagesLoaded(true);
+    });
+  }, [leaderboard, skin]);
+
+  if (!imagesLoaded && leaderboard.length > 0) return null;
 
   return (
     <div
@@ -84,7 +115,11 @@ const ResultTable = ({ className }: { className?: string }) => {
             </div>
           </div>
         ))}
-        <img src="/skin.png" className="absolute inset-0" alt="" />
+        <img
+          src={skin}
+          className="absolute inset-0 h-full w-full object-cover"
+          alt=""
+        />
       </div>
     </div>
   );
