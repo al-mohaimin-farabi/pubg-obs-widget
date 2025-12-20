@@ -78,9 +78,9 @@ const MatchEndResult = () => {
     >
       <div className="flex h-full items-end justify-items-end gap-6 p-4 pl-16">
         <ResultTable className="" skin={getSkinUrl(config.skin)} />
-        {/* <div className="flex h-full w-full items-end justify-end">
+        <div className="flex h-full w-full items-end justify-end">
           <Heading />
-        </div> */}
+        </div>
       </div>
     </motion.div>
   );

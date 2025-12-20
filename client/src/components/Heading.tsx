@@ -28,7 +28,7 @@ const Heading = () => {
           })}
           <div className="absolute bottom-0 z-100 w-full bg-linear-to-t from-white to-transparent">
             <div className={cn("mx-auto flex w-max items-center")}>
-              <p className="text-9xl font-extrabold text-white">#{firstTeam?.position}</p>
+              <p className="text-9xl font-extrabold text-widget-secondary">#{firstTeam?.position}</p>
 
               <img src="/bd-flag.webp" className="ml-6 w-26" alt="" />
 
