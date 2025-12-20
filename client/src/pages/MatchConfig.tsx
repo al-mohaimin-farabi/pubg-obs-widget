@@ -17,6 +17,10 @@ import toast from "react-hot-toast";
 interface Config {
   matchNumber: number;
   skin: string;
+  tournamentName?: string;
+  dayNumber?: number;
+  matchNumberTotal?: number;
+  title?: string;
 }
 
 export default function MatchConfig() {
@@ -141,16 +145,47 @@ export default function MatchConfig() {
                     Match Settings
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1">
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
                       <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Match Number
+                        Tournament Name
+                      </label>
+                      <Input
+                        value={config.tournamentName || ""}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            tournamentName: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Display Title (e.g. Overall Rankings)
+                      </label>
+                      <Input
+                        value={config.title || ""}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            title: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Match Number (Data)
                       </label>
                       <Input
                         type="number"
                         value={config.matchNumber}
-                        className="[appearance:textfield] text-lg font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        className="[appearance:textfield] font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         onChange={(e) =>
                           setConfig({
                             ...config,
@@ -158,9 +193,36 @@ export default function MatchConfig() {
                           })
                         }
                       />
-                      <p className="mt-1 text-xs text-gray-500">
-                        Set the match number to fetch statistics for.
-                      </p>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Day Number
+                      </label>
+                      <Input
+                        type="number"
+                        value={config.dayNumber || 0}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            dayNumber: parseInt(e.target.value) || 0,
+                          })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Total Matches
+                      </label>
+                      <Input
+                        type="number"
+                        value={config.matchNumberTotal || 0}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            matchNumberTotal: parseInt(e.target.value) || 0,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                 </CardContent>

@@ -9,6 +9,10 @@ export interface Skin {
 export interface Config {
   matchNumber: number;
   skin: string;
+  tournamentName?: string;
+  dayNumber?: number;
+  matchNumberTotal?: number;
+  title?: string;
 }
 
 const baseUrl = (

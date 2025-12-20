@@ -1,6 +1,10 @@
 let currentConfig = {
   matchNumber: 85,
-  skin: "default", // or filename
+  skin: "default",
+  tournamentName: "Grand Finals",
+  dayNumber: 3,
+  matchNumberTotal: 18,
+  title: "Overall Rankings",
 };
 
 function getConfig() {
