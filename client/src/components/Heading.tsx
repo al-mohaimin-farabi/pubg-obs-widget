@@ -7,38 +7,58 @@ interface Config {
   matchNumber: number;
   skin: string;
   tournamentName?: string;
-  dayNumber?: number;
-  matchNumberTotal?: number;
   title?: string;
+  headerBg?: string;
+  headerText?: string;
+  headerIsGradient?: boolean;
+  headerGradient?: string;
+  titleText?: string;
+  titleIsGradient?: boolean;
+  titleGradient?: string;
 }
 
 const Heading = ({ config }: { config?: Config }) => {
   const leaderboard = useAppSelector((state) => state.leaderboard.teams);
   const firstTeam = leaderboard[0];
 
+  const tournamentBgStyle = config?.headerIsGradient
+    ? { background: config.headerGradient }
+    : { backgroundColor: config?.headerBg || "var(--widget-secondary)" };
+
+  const tournamentTextStyle = {
+    color: config?.headerText || "var(--widget-muted)",
+  };
+
   return (
     <div className="relative w-full uppercase">
       <div className="relative w-full">
         <div className="relative flex w-full justify-center">
-          {firstTeam?.players.map((p, i) => {
-            const isLast = i === 3;
+          <div
+            className="relative flex w-full justify-center"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 75%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, black 75%, transparent 100%)",
+            }}
+          >
+            {firstTeam?.players.map((p, i) => {
+              const isLast = i === 3;
 
-            return (
-              <img
-                key={p.id}
-                src={p.image}
-                alt={p.in_game_name}
-                className={`h-[calc(100vh-400px)] ${i !== 0 ? "-ml-52" : ""} relative`}
-                style={{
-                  zIndex: isLast ? 10 : 10 + i,
-                  WebkitMaskImage:
-                    "linear-gradient(to bottom, black 80%, transparent 100%)",
-                  maskImage:
-                    "linear-gradient(to bottom, black 80%, transparent 100%)",
-                }}
-              />
-            );
-          })}
+              return (
+                <img
+                  key={p.id}
+                  src={p.image}
+                  alt={p.in_game_name}
+                  className={`h-[calc(100vh-400px)] ${i !== 0 ? "-ml-52" : ""} relative`}
+                  style={{
+                    zIndex: isLast ? 10 : 10 + i,
+                  }}
+                />
+              );
+            })}
+          </div>
+
           <div className="absolute bottom-0 z-100 w-full">
             <div className={cn("mx-auto flex w-max items-center")}>
               <p className="text-9xl font-extrabold text-widget-secondary">
@@ -67,20 +87,28 @@ const Heading = ({ config }: { config?: Config }) => {
       </div>
       <div className="mx-auto w-max pb-16">
         <div className="mt-1 flex justify-end font-semibold">
-          <div className="flex items-center bg-widget-secondary p-1 px-2 font-normal text-widget-muted">
-            {config?.tournamentName || "Grand Finals"} Day{" "}
-            {config?.dayNumber || 1} M{config?.matchNumber || 1} /
-            {config?.matchNumberTotal || 18}
+          <div
+            className="flex items-center p-1 px-2 font-normal"
+            style={{ ...tournamentBgStyle, ...tournamentTextStyle }}
+          >
+            {config?.tournamentName || "Grand Finals Day 3 M13 /18"}
           </div>
         </div>
-        <GradientText
-          from="widget-secondary"
-          to="widget-primary"
-          direction="vertical"
-          className="text-6xl font-bold"
-        >
-          {config?.title || "Overall Rankings"}
-        </GradientText>
+        {config?.titleIsGradient ? (
+          <GradientText
+            customGradient={config.titleGradient}
+            className="text-6xl font-bold"
+          >
+            {config?.title || "Overall Rankings"}
+          </GradientText>
+        ) : (
+          <span
+            className="block text-6xl font-bold"
+            style={{ color: config?.titleText || "var(--widget-primary)" }}
+          >
+            {config?.title || "Overall Rankings"}
+          </span>
+        )}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ interface GradientTextProps {
     | "widget-muted";
   to?: "widget-primary" | "widget-secondary" | "widget-accent" | "widget-muted";
   direction?: "horizontal" | "vertical" | "diagonal";
+  customGradient?: string;
 }
 
 export const GradientText: React.FC<GradientTextProps> = ({
@@ -18,6 +19,7 @@ export const GradientText: React.FC<GradientTextProps> = ({
   from = "widget-secondary",
   to = "widget-primary",
   direction = "vertical",
+  customGradient,
 }) => {
   const getGradientDirection = {
     horizontal: "to right",
@@ -32,18 +34,25 @@ export const GradientText: React.FC<GradientTextProps> = ({
     "widget-muted": "217 60% 11%",
   };
 
+  const gradient =
+    customGradient ||
+    `linear-gradient(${getGradientDirection[direction]}, hsl(${colorMap[from]}) 0%, hsl(${colorMap[from]}) 5%, hsl(${colorMap[to]}) 100%)`;
+
   return (
-    <span
-      className={cn("gradient-text", className)}
+    <div
+      className={cn("gradient-text bg-clip-text text-transparent", className)}
       style={{
-        background: `linear-gradient(${getGradientDirection[direction]}, hsl(${colorMap[from]}) 0%, hsl(${colorMap[from]}) 5%, hsl(${colorMap[to]}) 100%)`,
+        display: "block",
+        width: "fit-content",
+        backgroundImage: gradient,
         backgroundClip: "text",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
-        color: "transparent",
+        backgroundSize: "100%",
+        backgroundRepeat: "repeat",
       }}
     >
       {children}
-    </span>
+    </div>
   );
 };

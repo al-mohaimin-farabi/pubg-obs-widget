@@ -30,12 +30,12 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
-    // Keep original extension
+    // Use provided name or default to unique suffix
+    const name = req.body.name
+      ? req.body.name.replace(/[^a-z0-9]/gi, "_").toLowerCase()
+      : file.fieldname;
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
-    );
+    cb(null, name + "-" + uniqueSuffix + path.extname(file.originalname));
   },
 });
 
@@ -89,6 +89,24 @@ app.get("/api/skins", (req, res) => {
     });
     res.json(result);
   });
+});
+
+app.delete("/api/skins/:filename", (req, res) => {
+  const filename = req.params.filename;
+  if (filename === "default" || filename === "skin.png") {
+    return res.status(400).send("Cannot delete default skin.");
+  }
+  const filePath = path.join(__dirname, "uploads", filename);
+  if (fs.existsSync(filePath)) {
+    try {
+      fs.unlinkSync(filePath);
+      res.json({ message: "Skin deleted successfully" });
+    } catch (err) {
+      res.status(500).send("Error deleting file");
+    }
+  } else {
+    res.status(404).send("Skin not found");
+  }
 });
 
 app.get("/api/config", (req, res) => {

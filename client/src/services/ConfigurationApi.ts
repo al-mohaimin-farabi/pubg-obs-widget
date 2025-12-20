@@ -10,9 +10,14 @@ export interface Config {
   matchNumber: number;
   skin: string;
   tournamentName?: string;
-  dayNumber?: number;
-  matchNumberTotal?: number;
   title?: string;
+  headerBg?: string;
+  headerText?: string;
+  headerIsGradient?: boolean;
+  headerGradient?: string;
+  titleText?: string;
+  titleIsGradient?: boolean;
+  titleGradient?: string;
 }
 
 const baseUrl = (
@@ -36,6 +41,13 @@ export const ConfigurationApi = createApi({
       }),
       invalidatesTags: ["Skins"],
     }),
+    deleteSkin: builder.mutation<{ message: string }, string>({
+      query: (filename) => ({
+        url: `/api/skins/${filename}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Skins"],
+    }),
     getConfig: builder.query<Config, void>({
       query: () => "/api/config",
       providesTags: ["Config"],
@@ -54,6 +66,7 @@ export const ConfigurationApi = createApi({
 export const {
   useGetSkinsQuery,
   useUploadSkinMutation,
+  useDeleteSkinMutation,
   useGetConfigQuery,
   useUpdateConfigMutation,
 } = ConfigurationApi;
